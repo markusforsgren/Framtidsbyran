@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framtidsbyrån - Contact Intelligence för Rekrytering</title>
+    <meta name="description" content="Hitta telefonnummer och kontaktinfo på 10 sekunder istället för 30 minuter. AI-driven contact finder för rekryterare.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #0A4D8C;
+            --accent: #FF6B35;
+            --dark: #1A1A1A;
+            --secondary: #2A2A2A;
+            --text: #E8E9ED;
+            --text-light: rgba(232, 233, 237, 0.7);
+            --bg: #0F0F0F;
+            --border: rgba(232, 233, 237, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+        
+        /* Problem Section */
+        .problem {
+            padding: 6rem 0;
+            background: var(--secondary);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .problem-card {
+            background: var(--bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .problem-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Solution */
+        .solution {
+            padding: 6rem 0;
+        }
+        
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .source-badge {
+            background: var(--secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .demo-preview {
+            background: var(--secondary);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+        
+        .demo-input {
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .demo-result {
+            background: var(--bg);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .demo-result h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .demo-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+        
+        .demo-value {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Features */
+        .features {
+            padding: 6rem 0;
+            background: var(--secondary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: var(--bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+        }
+        
+        .feature-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+        
+        /* Priser */
+        .pricing {
+            padding: 6rem 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: var(--secondary);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 1.5rem 0;
+        }
+        
+        .price span {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .features-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .features-list li:before {
+            content: "✓ ";
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(10, 77, 140, 0.3), rgba(255, 107, 53, 0.3));
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            font-size: 1.2rem;
+        }
+        
+        .contact-item a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .solution-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>FRAMTIDSBYRÅN</h1>
+                <span style="color: var(--text-light);">Contact Intelligence</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h2>Hitta kontaktinfo på<br>10 sekunder</h2>
+            <p>Istället för 30 minuter manuell sökning</p>
+            <div class="cta-buttons">
+                <a href="/cdn-cgi/l/email-protection#5e333f2c352b2d1e2e2c313a32272a373d2d702d3b612d2b3c343b3d2a631a3b33317e3f287e182c3f332a373a2d3c272c9dfb30" class="btn btn-primary">📅 Boka Demo</a>
+                <a href="#features" class="btn btn-secondary">Se Plattform</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title">Problemet</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-number">30 min</div>
+                    <h3>Per person</h3>
+                    <p>Att hitta telefonnummer, email och annan kontaktinfo manuellt</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-number">100+</div>
+                    <h3>Kandidater/vecka</h3>
+                    <p>Typisk sourcing volym för en rekryterare</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-number">50h</div>
+                    <h3>Varje vecka</h3>
+                    <p>Spenderas på repetitiv research istället för verkligt arbete</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">Lösningen</h2>
+            <div class="solution-content">
+                <div>
+                    <h3 style="font-size: 2rem; margin-bottom: 2rem;">Automatisk sökning i 10+ databaser</h3>
+                    <div class="sources-grid">
+                        <div class="source-badge">Link Mobility</div>
+                        <div class="source-badge">SPAR</div>
+                        <div class="source-badge">UC (MrKoll)</div>
+                        <div class="source-badge">LinkedIn</div>
+                        <div class="source-badge">Bisnode</div>
+                        <div class="source-badge">Allabolag</div>
+                        <div class="source-badge">Hitta.se</div>
+                        <div class="source-badge">Eniro</div>
+                    </div>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 107, 53, 0.1); border-radius: 12px;">
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Resultat:</h4>
+                        <p style="font-size: 1.2rem;">95% träffsäkerhet • 10 sekunder per sökning</p>
+                    </div>
+                </div>
+                <div class="demo-preview">
+                    <div class="demo-input">
+                        Sök: Anna Svensson, Stockholm
+                    </div>
+                    <div class="demo-result">
+                        <h4>✓ Hittad på 8.3 sekunder</h4>
+                        <div class="demo-detail">
+                            <span>📱</span>
+                            <span class="demo-value">+46 70 123 45 67</span>
+                        </div>
+                        <div class="demo-detail">
+                            <span>✉️</span>
+                            <span class="demo-value">anna.svensson@företag.se</span>
+                        </div>
+                        <div class="demo-detail">
+                            <span>📍</span>
+                            <span>Storgatan 1, Stockholm</span>
+                        </div>
+                        <div class="demo-detail">
+                            <span>🏢</span>
+                            <span>Senior Developer @ TechCo</span>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-light);">
+                            Källor: Link Mobility • LinkedIn • Allabolag
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Komplett Rekryteringssvit</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Contact Finder</h3>
+                    <p>Hitta telefonnummer och email på 10 sekunder. Sök enskilt eller bulk (upp till 100 samtidigt).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>CV-Screening</h3>
+                    <p>AI läser och rankar 100 CVs automatiskt mot din jobbeskrivning. Spara 20h/vecka på CV-granskning.</p>
+                    <span class="feature-badge">PRO</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Email-Kampanjer</h3>
+                    <p>Personaliserade bulk-emails med AI. Integration med Instantly.ai och Link Mobility.</p>
+                    <span class="feature-badge">PRO</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>SMS-Utskick</h3>
+                    <p>Direkta SMS till kandidater via Link Mobility. Spåra leverans och svar.</p>
+                    <span class="feature-badge">PRO</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analys</h3>
+                    <p>Dashboard med användningsstatistik, träffsäkerhets, kostnader och teamprestation.</p>
+                    <span class="feature-badge">PRO</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Teamhantering</h3>
+                    <p>Stöd för flera användare med roller, behörigheter och individuell användningsspårning.</p>
+                    <span class="feature-badge">ENTERPRISE</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Priser -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Priser</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Pilot</h3>
+                    <div class="price">15k <span>engångskostnad</span></div>
+                    <ul class="features-list">
+                        <li>4 veckor test</li>
+                        <li>Contact Finder (100 sökningar)</li>
+                        <li>Uppsättning + Utbildning</li>
+                        <li>Email-support</li>
+                    </ul>
+                    <a href="/cdn-cgi/l/email-protection#7d101c0f16080e3d0d0f1219110409141e0e530e18420e081f17181e09402d141112095d2d0f121a0f1c10" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Kom igång</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">10k <span>/månad</span></div>
+                    <ul class="features-list">
+                        <li>Contact Finder (200 sökningar/mån)</li>
+                        <li>Sökhistorik</li>
+                        <li>Export CSV</li>
+                        <li>Email-support</li>
+                        <li>1 användare</li>
+                    </ul>
+                    <a href="/cdn-cgi/l/email-protection#c2afa3b0a9b7b182b2b0ada6aebbb6aba1b1ecb1a7fdb1b7a0a8a7a1b6ff80a3b1aba1e292aea3ac" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Välj Basic</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Pro</h3>
+                    <div class="price">25k <span>/månad</span></div>
+                    <ul class="features-list">
+                        <li>Contact Finder (1,000 sökningar/mån)</li>
+                        <li>CV-Screening (200 CVs/mån)</li>
+                        <li>Email & SMS Campaigns</li>
+                        <li>Analys Dashboard</li>
+                        <li>Prioriterad support</li>
+                        <li>5 användare</li>
+                    </ul>
+                    <a href="/cdn-cgi/l/email-protection#204d41524b55536050524f444c59544943530e53451f5355424a4543541d70524f00704c414e" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Välj Pro</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Anpassat</div>
+                    <ul class="features-list">
+                        <li>Obegränsade sökningar</li>
+                        <li>Obegränsade CV screening</li>
+                        <li>Komplett svit</li>
+                        <li>Anpassat integrations</li>
+                        <li>White label-alternativ</li>
+                        <li>Dedikerad support</li>
+                        <li>Obegränsade användare</li>
+                    </ul>
+                    <a href="/cdn-cgi/l/email-protection#c2afa3b0a9b7b182b2b0ada6aebbb6aba1b1ecb1a7fdb1b7a0a8a7a1b6ff87acb6a7b0b2b0abb1a7" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">Kontakta oss</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Redo att komma igång?</h2>
+            <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">Boka en kostnadsfri demo idag</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    📧 <a href="/cdn-cgi/l/email-protection#e885899a839d9ba8989a878c84919c818b9bc69b8d"><span class="__cf_email__" data-cfemail="0964687b627c7a49797b666d65707d606a7a277a6c">[email&#160;protected]</span></a>
+                </div>
+                <div class="contact-item">
+                    📞 <a href="tel:0703507699">070-350 76 99</a>
+                </div>
+            </di
